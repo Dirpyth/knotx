@@ -15,118 +15,84 @@
  */
 package io.knotx.dataobjects;
 
-import io.knotx.util.DataObjectsUtil;
 import io.knotx.util.MultiMapConverter;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 import io.vertx.codegen.annotations.DataObject;
-import io.vertx.codegen.annotations.GenIgnore;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.json.JsonObject;
 import io.vertx.rxjava.core.MultiMap;
+import java.util.Base64;
+import org.apache.commons.lang3.StringUtils;
 
-@DataObject(generateConverter = true)
+@DataObject
 public class ClientResponse {
 
-  private int statusCode;
-
-  private MultiMap headers = MultiMap.caseInsensitiveMultiMap();
-
-  private Buffer body;
+  private JsonObject clientResponse;
 
   public ClientResponse() {
-    //Empty object
+    clientResponse = new JsonObject();
   }
 
   public ClientResponse(JsonObject json) {
-    ClientResponseConverter.fromJson(json, this);
+    this.clientResponse = json.copy();
   }
 
   public JsonObject toJson() {
-    JsonObject json = new JsonObject();
-    ClientResponseConverter.toJson(this, json);
-    return json;
+    return clientResponse.copy();
   }
 
   public ClientResponse clearBody() {
-    this.body = Buffer.buffer();
+    clientResponse.remove("body");
     return this;
   }
 
   public JsonObject toMetadataJson() {
     JsonObject json = new JsonObject();
-    json.put("statusCode", statusCode);
-    json.put("headers", MultiMapConverter.toJsonObject(headers));
+    json.put("statusCode", clientResponse.getInteger("statusCode"));
+    json.put("headers", clientResponse.getJsonObject("headers"));
     return json;
   }
 
 
   public int getStatusCode() {
-    return statusCode;
+    return clientResponse.getInteger("statusCode");
   }
 
   public ClientResponse setStatusCode(int statusCode) {
-    this.statusCode = statusCode;
+    clientResponse.put("statusCode", statusCode);
     return this;
   }
 
   public Buffer getBody() {
-    return body;
+    return Buffer.buffer(Base64.getDecoder().decode((String) clientResponse.getValue("body",
+        StringUtils.EMPTY)));
   }
 
   public ClientResponse setBody(Buffer body) {
-    this.body = body.copy();
+    clientResponse.put("body", body.getBytes());
     return this;
   }
 
-  @GenIgnore
   public MultiMap getHeaders() {
-    return MultiMap.caseInsensitiveMultiMap().addAll(headers);
+    return MultiMapConverter.fromJsonObject(clientResponse.getJsonObject("headers"));
   }
 
-  @GenIgnore
   public ClientResponse setHeaders(MultiMap headers) {
-    this.headers = MultiMap.caseInsensitiveMultiMap().addAll(headers);
+    clientResponse.put("headers", MultiMapConverter.toJsonObject(headers));
     return this;
-  }
-
-  /**
-   * Serialization variants of MultiMap fields
-   **/
-
-  JsonObject getJsonHeaders() {
-    return MultiMapConverter.toJsonObject(headers);
-  }
-
-  void setJsonHeaders(JsonObject headers) {
-    this.headers = MultiMapConverter.fromJsonObject(headers);
   }
 
   @Override
   public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof ClientResponse)) {
-      return false;
-    }
-    ClientResponse that = (ClientResponse) o;
-    return Objects.equal(statusCode, that.statusCode) &&
-        DataObjectsUtil.equalsMultiMap(this.headers, that.headers) &&
-        DataObjectsUtil.equalsBody(this.body, that.body);
+    return clientResponse.equals(o);
   }
 
   @Override
   public int hashCode() {
-    return 31 * Objects.hashCode(statusCode, body) + DataObjectsUtil.multiMapHash(headers);
+    return clientResponse.hashCode();
   }
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this)
-        .add("statusCode", statusCode)
-        .add("headers", DataObjectsUtil.toString(headers))
-        .add("body", body)
-        .toString();
+    return clientResponse.encodePrettily();
   }
 }

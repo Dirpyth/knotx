@@ -57,10 +57,6 @@ Serialization variants of MultiMap fields
 |===
 ^|Name | Type ^| Description
 |[[body]]`body`|`Buffer`|-
-|[[jsonHeaders]]`jsonHeaders`|`Json object`|
-+++
-Serialization variants of MultiMap fields
-+++
 |[[statusCode]]`statusCode`|`Number (int)`|-
 |===
 
