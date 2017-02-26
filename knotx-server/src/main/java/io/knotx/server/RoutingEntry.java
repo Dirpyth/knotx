@@ -15,8 +15,11 @@
  */
 package io.knotx.server;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Map;
 
+@JsonAutoDetect
 public class RoutingEntry {
 
   private String path;
@@ -29,14 +32,17 @@ public class RoutingEntry {
     this.onTransition = onTransition;
   }
 
+  @JsonProperty
   public String path() {
     return path;
   }
 
+  @JsonProperty
   public String address() {
     return address;
   }
 
+  @JsonProperty
   public Map<String, RoutingEntry> onTransition() {
     return onTransition;
   }

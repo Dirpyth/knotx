@@ -18,16 +18,13 @@ package io.knotx.server;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpMethod;
+import io.vertx.core.json.Json;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.rxjava.ext.web.RoutingContext;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.stream.Collectors;
-import org.apache.commons.lang3.StringUtils;
 
 public class SupportedMethodsAndPathsHandler implements Handler<RoutingContext> {
 
@@ -54,8 +51,6 @@ public class SupportedMethodsAndPathsHandler implements Handler<RoutingContext> 
 
     Collection<List<RoutingEntry>> engineRoutingValues = engineRouting.values();
 
-    Set<Entry<HttpMethod, List<RoutingEntry>>> engineRoutingEntries = engineRouting.entrySet();
-
     boolean shouldRejectPath = engineRoutingValues.stream().noneMatch(
         routingEntries -> routingEntries.stream()
             .anyMatch(item -> context.request().path().matches(item.path()))
@@ -68,22 +63,15 @@ public class SupportedMethodsAndPathsHandler implements Handler<RoutingContext> 
     } else if (shouldRejectPath) {
       LOGGER.warn("Requested path {} is not supported based on configuration",
           context.request().path());
-      if (LOGGER.isDebugEnabled()) {
-        String fullConfig = engineRoutingEntries.stream()
-            .map(entry ->
-                StringUtils.join(entry.getKey().toString(),
-                    entry.getValue().stream()
-                        .map(routingEntry -> routingEntry.path())
-                        .collect(Collectors.joining("\n\t", "\n\t", "")
-                        )
-                )
-            )
-            .collect(Collectors.joining("\n", "Allowed paths per method:\n", ""));
-        LOGGER.debug(fullConfig);
-      }
       context.fail(HttpResponseStatus.NOT_FOUND.code());
     } else {
       context.next();
+    }
+    if((shouldRejectMethod || shouldRejectPath) && LOGGER.isDebugEnabled()) {
+      String engineRoutingJsonString = Json.encodePrettily(engineRouting);
+      LOGGER.debug(
+          "Allowed paths per method as per the knotx:io.knotx.KnotxServer config found:\n{}",
+          engineRoutingJsonString);
     }
   }
 }
