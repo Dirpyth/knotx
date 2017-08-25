@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.knotx.knot;
+package io.knotx.knot.rx;
 
 import io.knotx.dataobjects.Fragment;
 import io.knotx.dataobjects.KnotContext;
@@ -30,27 +30,28 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
+import rx.Single;
 
 /**
  * Abstract class that should be root for all custom knots
  */
-public abstract class AbstractKnotProxy implements KnotProxy {
+public abstract class AbstractKnotRxProxy implements KnotProxy {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractKnotProxy.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractKnotRxProxy.class);
 
   protected static final String DEFAULT_TRANSITION = "next";
 
   @Override
   public void process(KnotContext knotContext, Handler<AsyncResult<KnotContext>> result) {
     if (shouldProcess(knotContext)) {
-      processRequest(knotContext).setHandler(ctx -> {
-        if (ctx.succeeded()) {
-          result.handle(ctx);
-        } else {
-          LOGGER.error("Error happened during Knot Context processing", ctx.cause());
-          result.handle(Future.succeededFuture(processError(knotContext, ctx.cause())));
-        }
-      });
+      processRequest(knotContext)
+          .subscribe(
+              ctx -> result.handle(Future.succeededFuture(ctx)),
+              error -> {
+                LOGGER.error("Error happened during Knot Context processing", error);
+                result.handle(Future.succeededFuture(processError(knotContext, error)));
+              }
+          );
     } else {
       knotContext.setTransition(StringUtils.isBlank(knotContext.getTransition()) ?
           DEFAULT_TRANSITION : knotContext.getTransition());
@@ -64,9 +65,9 @@ public abstract class AbstractKnotProxy implements KnotProxy {
    * be performing.
    *
    * @param knotContext message from the Server with processing context.
-   * @return a {@link Future<KnotContext>}.
+   * @return a {@link Single} that emits a processed and modified {@link KnotContext}.
    */
-  protected abstract Future<KnotContext> processRequest(KnotContext knotContext);
+  protected abstract Single<KnotContext> processRequest(KnotContext knotContext);
 
   /**
    * Method lets you decide whether the Fragment should be processed by your Knot or not.
