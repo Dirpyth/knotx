@@ -72,7 +72,7 @@
               "name": "first-service",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/first.json"
+                "path": "/services/mock/first.json"
               },
               "cacheKey": "first"
             },
@@ -80,70 +80,77 @@
               "name": "mountains",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-mountains.json"
+                "path": "/services/mock/seven-mountains.json"
               }
             },
             {
               "name": "continents",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-continents.json"
+                "path": "/services/mock/seven-continents.json"
               }
             },
             {
               "name": "names",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-names.json"
+                "path": "/services/mock/seven-names.json"
               }
             },
             {
               "name": "dates",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-dates.json"
+                "path": "/services/mock/seven-dates.json"
               }
             },
             {
               "name": "countries",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-countries.json"
+                "path": "/services/mock/seven-countries.json"
               }
             },
             {
               "name": "passes",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-mountain-passes.json"
+                "path": "/services/mock/seven-mountain-passes.json"
               }
             },
             {
               "name": "winds",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-winds.json"
+                "path": "/services/mock/seven-winds.json"
               }
             },
             {
               "name": "stars",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-stars.json"
+                "path": "/services/mock/seven-stars.json"
               }
             },
             {
               "name": "deserts",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-deserts.json"
+                "path": "/services/mock/seven-deserts.json"
               }
             },
             {
               "name": "lakes",
               "address": "knotx.adapter.service.http",
               "params": {
-                "path": "/service/mock/seven-lakes.json"
+                "path": "/services/mock/seven-lakes.json"
+              }
+            },
+            {
+              "name": "people",
+              "address": "knotx.adapter.service.http",
+              "params": {
+                "path": "/services/mock/people-50.json"
               }
             }
           ]
@@ -165,7 +172,7 @@
         "config": {
           "services": [
             {
-              "path": "/service/mock/.*",
+              "path": "/services/mock/.*",
               "domain": "mocks.local",
               "port": 3000,
               "allowedRequestHeaders": [
