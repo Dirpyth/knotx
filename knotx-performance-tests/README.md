@@ -22,6 +22,10 @@
 
 - [http://localhost:8092/content/simple-big-data.html](http://localhost:8092/content/simple-big-data.html)
 
+### 1 big snippet with huge json to process
+
+- [http://localhost:8092/content/1-big-snippet-1-service-wtih-big-json.html](http://localhost:8092/content/1-big-snippet-1-service-wtih-big-json.html)
+
 ### soak test
 
 TODO
