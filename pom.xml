@@ -180,8 +180,8 @@
           <artifactId>maven-compiler-plugin</artifactId>
           <version>${maven.compiler.plugin.version}</version>
           <configuration>
-            <source>1.8</source>
-            <target>1.8</target>
+            <source>${java.version}</source>
+            <target>${java.version}</target>
           </configuration>
           <executions>
             <execution>
@@ -444,6 +444,42 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+    <profile>
+      <id>java-8</id>
+      <properties>
+        <java.version>1.8</java.version>
+      </properties>
+      <activation>
+        <jdk>1.8</jdk>
+      </activation>
+    </profile>
+    <profile>
+      <id>java-9</id>
+      <properties>
+        <java.version>9</java.version>
+      </properties>
+      <activation>
+        <jdk>9</jdk>
+      </activation>
+    </profile>
+    <profile>
+      <id>java-10</id>
+      <properties>
+        <java.version>10</java.version>
+      </properties>
+      <activation>
+        <jdk>10</jdk>
+      </activation>
+    </profile>
+    <profile>
+      <id>java-11</id>
+      <properties>
+        <java.version>11</java.version>
+      </properties>
+      <activation>
+        <jdk>11</jdk>
+      </activation>
     </profile>
   </profiles>
 </project>
