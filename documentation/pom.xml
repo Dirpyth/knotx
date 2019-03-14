@@ -78,8 +78,20 @@
                   <fileset dir="${project.basedir}/src/main">
                     <include name="cheatsheets-intro.adoc"></include>
                   </fileset>
-                  <fileset dir="${project.basedir}/.dataobjects">
-                    <include name="*-dataobjects.adoc"></include>
+                  <fileset dir="${project.basedir}/../knotx-adapter/knotx-adapter-common/src/main/asciidoc">
+                    <include name="dataobjects.adoc"></include>
+                  </fileset>
+                  <fileset dir="${project.basedir}/../knotx-core/src/main/asciidoc">
+                    <include name="dataobjects.adoc"></include>
+                  </fileset>
+                  <fileset dir="${project.basedir}/../knotx-knot/knotx-knot-action/src/main/asciidoc">
+                    <include name="dataobjects.adoc"></include>
+                  </fileset>
+                  <fileset dir="${project.basedir}/../knotx-knot/knotx-knot-handlebars/src/main/asciidoc">
+                    <include name="dataobjects.adoc"></include>
+                  </fileset>
+                  <fileset dir="${project.basedir}/../knotx-knot/knotx-knot-service/src/main/asciidoc">
+                    <include name="dataobjects.adoc"></include>
                   </fileset>
                 </concat>
               </target>
