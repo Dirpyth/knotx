@@ -15,11 +15,11 @@
  */
 package io.knotx.server;
 
+import io.knotx.reactivex.proxy.KnotProxy;
 import org.apache.commons.lang3.StringUtils;
 
 import io.knotx.dataobjects.Fragment;
 import io.knotx.dataobjects.KnotContext;
-import io.knotx.reactivex.proxy.KnotProxy;
 import io.knotx.server.configuration.KnotxServerOptions;
 import io.vertx.core.Handler;
 import io.vertx.core.logging.Logger;

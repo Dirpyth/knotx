@@ -13,7 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@ModuleGen(name = "knotx-eb-api", groupPackage = "io.knotx")
+@io.vertx.codegen.annotations.ModuleGen(name = "knotx-eb-api", groupPackage = "io.knotx")
 package io.knotx;
-
-import io.vertx.codegen.annotations.ModuleGen;
