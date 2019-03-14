@@ -150,7 +150,7 @@ public class Fragment {
   }
 
   /**
-   * @return <tt>true</tt> if this Fragment has no dynamic parts (contains only static markup).
+   * @return <code>true</code> if this Fragment has no dynamic parts (contains only static markup).
    */
   public boolean isRaw() {
     return knots().contains(RAW_FRAGMENT_ID);

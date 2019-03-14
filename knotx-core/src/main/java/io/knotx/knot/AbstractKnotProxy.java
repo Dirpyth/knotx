@@ -74,7 +74,7 @@ public abstract class AbstractKnotProxy implements KnotProxy {
    * Method lets you decide whether the Fragment should be processed by your Knot or not.
    *
    * @param fragment Fragment to process - or skip  {@link Fragment}.
-   * @return <tt>true</tt> if this Knot should process current {@link Fragment}.
+   * @return <code>true</code> if this Knot should process current {@link Fragment}.
    */
   protected boolean shouldProcess(Fragment fragment) {
     return !fragment.failed() && shouldProcess(Sets.newHashSet(fragment.knots()));
@@ -84,7 +84,7 @@ public abstract class AbstractKnotProxy implements KnotProxy {
    * Method lets you decide whether the Fragment with a given set of Knots should be processed by your Knot or not
    *
    * @param knots set of all Knots names that occurred in the current {@link KnotContext}.
-   * @return <tt>true</tt> if this Knot should process current {@link KnotContext}.
+   * @return <code>true</code> if this Knot should process current {@link KnotContext}.
    */
   protected abstract boolean shouldProcess(Set<String> knots);
 
