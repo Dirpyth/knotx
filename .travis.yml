@@ -6,6 +6,7 @@ script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package sonar:son
 jdk:
   - oraclejdk8
   - oraclejdk11
+  - openjdk8
   - openjdk11
 addons:
   sonarqube:
